@@ -73,9 +73,10 @@ void fop() {
 		printf("\n");
 
 		pop(ECX);
-		imul( EAX, ECX);
 		xchg( ECX, EAX );
 		cdq();
+		idiv( ECX );
+		
 
 		printf("pop ecx\n");
 		printf("xchg   ecx,eax\n");
@@ -129,7 +130,7 @@ void sum() {
 	}
 }
 
-char *str = "34-2*8+2*3";
+char *str = "2*5+4/2*2";
 
 
 void inp() {

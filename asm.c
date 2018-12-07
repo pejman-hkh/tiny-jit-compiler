@@ -80,6 +80,18 @@ void neg( int reg ) {
   set_asm( ret, sizeof( ret ) );
 }
 
+void idiv( int reg ) {
+  unsigned char ret[2];
+  ret[0] = 0xF7;
+  switch( reg ) {
+    case ECX :
+      ret[1] = 0xF9;
+      break;
+  }
+
+  set_asm( ret, sizeof( ret ) );
+}
+
 void add( int reg, int reg1 ) {
   unsigned char ret[2];
   switch( reg ) {
