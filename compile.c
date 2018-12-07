@@ -72,14 +72,12 @@ void fop() {
 		printf("push eax\nmov eax, %s\n", tokc );
 		printf("\n");
 
-		sum();
-		
+
 		pop(ECX);
 		xchg( ECX, EAX );
 		cdq();
 		idiv( ECX );
 		
-
 		printf("pop ecx\n");
 		printf("xchg   ecx,eax\n");
 		printf("cdq\n");
@@ -132,7 +130,7 @@ void sum() {
 	}
 }
 
-char *str = "4/2*2";
+char *str = "30+4/2*2+4";
 
 
 void inp() {
