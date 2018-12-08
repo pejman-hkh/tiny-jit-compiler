@@ -60,6 +60,7 @@ void sum( int l ) {
 			mov(ECX, 0);
 			sub(EAX, ECX);
 			neg( EAX );
+			sum(1);
 		}
 
 	} else if( tok == '*' ) {
@@ -79,7 +80,7 @@ void sum( int l ) {
 	}
 }
 
-char *str = "3*-2+1";
+char *str;
 
 void inp() {
 	ch = str[ofst++];
@@ -87,6 +88,7 @@ void inp() {
 
 int main(int argc, char const *argv[])
 {
+	str = argv[1];
 	printf("%s\n", str);
 	sum(1);
 	leave();
