@@ -1,5 +1,5 @@
 # Tiny jit compiler
-Simplest x86 32bit jit compiler
+Toy x86 32bit jit compiler
 
 # Compile 
 

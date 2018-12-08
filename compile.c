@@ -33,39 +33,33 @@ void next() {
 	}
 }
 
-void fop() {
+void fop( int l ) {
 	next();
 	if( tok == 1) {
 		mov( EAX, atoi( tokc ) );
-		next();
-		printf("%s\n", tokc );
+		if( l == 1 )
+			next();
 	}
 	
 	if( tok == '*' ) {
 		push(EAX);
-		next();
-		mov( EAX, atoi( tokc ) );
-
+		fop(0);
 		pop(ECX);
 		imul( EAX, ECX);
-
 		sum();
 	} else if( tok == '/') {
 		push(EAX);
-		next();
-		mov( EAX, atoi( tokc ) );
-
+		fop(0);
 		pop(ECX);
 		xchg( ECX, EAX );
 		cdq();
 		idiv( ECX );
-
 		sum();
 	}
 }
 
 void sum() {
-	fop();
+	fop(1);
 
 	if( tok == '+' ) {
 		push(EAX);
