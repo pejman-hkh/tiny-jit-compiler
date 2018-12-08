@@ -1,6 +1,6 @@
 #include "asm.h"
 
-char * regStr[] = { "EAX", "EBX", "ECX", "EDX" };
+char * regStr[] = { "eax", "ebx", "ecx", "edx" };
 
 int exec( unsigned char *code, int size ) {
 
