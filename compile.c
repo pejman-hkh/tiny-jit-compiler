@@ -80,7 +80,7 @@ void sum( int l ) {
 	}
 }
 
-char *str = "-12+2*5";
+char *str = "3*-2+1";
 
 void inp() {
 	ch = str[ofst++];

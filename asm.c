@@ -1,5 +1,5 @@
 #include "asm.h"
-asm_iter = 0;
+
 char * regStr[] = { "EAX", "EBX", "ECX", "EDX" };
 
 int exec( unsigned char *code, int size ) {

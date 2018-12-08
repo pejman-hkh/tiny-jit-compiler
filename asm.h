@@ -8,8 +8,6 @@
 
 unsigned char asm_instruction[1000];
 int asm_iter;
-
-
 enum {
   EAX,
   EBX,
@@ -25,9 +23,11 @@ void neg( int reg );
 void add( int reg, int reg1 );
 void sub( int reg, int reg1 );
 void imul( int reg, int reg1 );
+void idiv( int reg );
 void xchg( int reg, int reg1 );
 void pop( int reg );
 void cdq();
+void leave();
 void ret();
 
 #endif
