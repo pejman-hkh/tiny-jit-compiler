@@ -10,7 +10,7 @@ void inp();
 
 char ch;
 int ofst = 0;
-int tok;
+int tok = -1;
 char tokc[100];
 
 void next() {
@@ -31,12 +31,12 @@ void next() {
 		memset(tokc, 0, sizeof (tokc) );
 	}
 }
+
+int a;
 void sum( int l ) {
+	a = tok;
 	next();
-	int a;
-	a = 0;
 	if( tok == 1) {
-		a = 1;
 		mov( EAX, atoi( tokc ) );
 		if( l == 1 )
 			next();
@@ -48,7 +48,8 @@ void sum( int l ) {
 		pop(ECX);
 		add(EAX, ECX);
 	} else if( tok == '-' ) {
-		if(a == 1 ) {
+		
+		if( a == 1 ) {
 			push(EAX);
 			int a = tok;
 			sum(1);
@@ -56,12 +57,14 @@ void sum( int l ) {
 			sub(EAX, ECX);
 			neg( EAX );
 		} else {
+			int b = a;
 			sum(0);
 			mov(ECX, 0);
 			sub(EAX, ECX);
 			neg( EAX );
-			sum(1);
-		}
+			if( b == -1 )
+				sum(1);
+		}		
 
 	} else if( tok == '*' ) {
 		push(EAX);
