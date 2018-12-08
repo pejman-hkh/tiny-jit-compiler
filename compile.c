@@ -51,7 +51,6 @@ void sum( int l ) {
 		
 		if( a == 1 ) {
 			push(EAX);
-			int a = tok;
 			sum(1);
 			pop(ECX);
 			sub(EAX, ECX);
