@@ -1,5 +1,6 @@
 #include "asm.h"
 asm_iter = 0;
+char * regStr[] = { "EAX", "EBX", "ECX", "EDX" };
 
 int exec( unsigned char *code, int size ) {
 
@@ -20,6 +21,8 @@ void set_asm( unsigned char * ret, int size ) {
 
 void mov( int reg, int val ) {
   unsigned char ret[5];
+
+  printf("mov %s, %d\n", regStr[reg], val );
 
   switch( reg ) {
     case EAX :
@@ -52,6 +55,8 @@ void mov( int reg, int val ) {
 }
 
 void push( int reg ) {
+  printf("push %s\n", regStr[reg] );
+
   unsigned char ret[1];
   switch( reg ) {
     case EAX :
@@ -69,6 +74,8 @@ void push( int reg ) {
 }
 
 void neg( int reg ) {
+  printf("neg %s\n", regStr[reg] );
+  
   unsigned char ret[2];
   ret[0] = 0xF7;
   switch( reg ) {
@@ -81,6 +88,8 @@ void neg( int reg ) {
 }
 
 void idiv( int reg ) {
+  printf("idiv %s\n", regStr[reg] );
+
   unsigned char ret[2];
   ret[0] = 0xF7;
   switch( reg ) {
@@ -93,6 +102,8 @@ void idiv( int reg ) {
 }
 
 void add( int reg, int reg1 ) {
+  printf("add %s, %s\n", regStr[reg], regStr[reg1]  );
+    
   unsigned char ret[2];
   switch( reg ) {
     case EAX :
@@ -113,6 +124,8 @@ void add( int reg, int reg1 ) {
 
 
 void sub( int reg, int reg1 ) {
+  printf("sub %s, %s\n", regStr[reg], regStr[reg1]  );
+
   unsigned char ret[2];
   switch( reg ) {
     case EAX :
@@ -132,6 +145,8 @@ void sub( int reg, int reg1 ) {
 }
 
 void imul( int reg, int reg1 ) {
+  printf("imul %s, %s\n", regStr[reg], regStr[reg1]  );
+
   unsigned char ret[3];
   switch( reg ) {
     case EAX :
@@ -152,6 +167,8 @@ void imul( int reg, int reg1 ) {
 }
 
 void xchg( int reg, int reg1 ) {
+  printf("xchg %s, %s\n", regStr[reg], regStr[reg1]  );
+
   unsigned char ret[1];
   switch( reg ) {
     case ECX :
@@ -168,6 +185,8 @@ void xchg( int reg, int reg1 ) {
 
 
 void pop( int reg ) {
+  printf("pop %s\n", regStr[reg] );
+
   unsigned char ret[1];
 
   switch( reg ) {
@@ -187,12 +206,14 @@ void pop( int reg ) {
 }
 
 void cdq() {
+  printf("cdq\n");
   unsigned char ret[1];
   ret[0] = 0x99;
   set_asm( ret, sizeof( ret ) );
 }
 
 void ret() {
+  printf("ret\n");  
   unsigned char ret[1];
   ret[0] = 0xC3;
   set_asm( ret, sizeof( ret ) );
