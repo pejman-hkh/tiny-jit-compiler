@@ -60,7 +60,6 @@ void sum( int l ) {
 			mov(ECX, 0);
 			sub(EAX, ECX);
 			neg( EAX );
-			sum(1);
 		}
 
 	} else if( tok == '*' ) {
