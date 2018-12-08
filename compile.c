@@ -31,10 +31,12 @@ void next() {
 		memset(tokc, 0, sizeof (tokc) );
 	}
 }
-
 void sum( int l ) {
 	next();
+	int a;
+	a = 0;
 	if( tok == 1) {
+		a = 1;
 		mov( EAX, atoi( tokc ) );
 		if( l == 1 )
 			next();
@@ -46,11 +48,21 @@ void sum( int l ) {
 		pop(ECX);
 		add(EAX, ECX);
 	} else if( tok == '-' ) {
-		push(EAX);
-		sum(1);
-		pop(ECX);
-		sub(EAX, ECX);
-		neg( EAX );
+		if(a == 1 ) {
+			push(EAX);
+			int a = tok;
+			sum(1);
+			pop(ECX);
+			sub(EAX, ECX);
+			neg( EAX );
+		} else {
+			sum(0);
+			mov(ECX, 0);
+			sub(EAX, ECX);
+			neg( EAX );
+			sum(1);
+		}
+
 	} else if( tok == '*' ) {
 		push(EAX);
 		sum(0);
@@ -68,7 +80,7 @@ void sum( int l ) {
 	}
 }
 
-char *str = "4*3+2*9";
+char *str = "-12+2*5";
 
 void inp() {
 	ch = str[ofst++];
@@ -76,9 +88,9 @@ void inp() {
 
 int main(int argc, char const *argv[])
 {
-
 	printf("%s\n", str);
 	sum(1);
+	leave();
 	ret();
 	printf("%d\n", exec( asm_instruction, asm_iter ) );
 

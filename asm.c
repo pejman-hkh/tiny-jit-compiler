@@ -49,6 +49,14 @@ void mov( int reg, int val ) {
       ret[3] = 0x00;
       ret[4] = 0x00;
       break;
+
+    case ECX :
+      ret[0] = 0xB9;
+      ret[1] = val;
+      ret[2] = 0x00;
+      ret[3] = 0x00;
+      ret[4] = 0x00;
+      break;
   }
 
   set_asm( ret, sizeof( ret ) );
@@ -216,5 +224,12 @@ void ret() {
   printf("ret\n");  
   unsigned char ret[1];
   ret[0] = 0xC3;
+  set_asm( ret, sizeof( ret ) );
+}
+
+void leave() {
+  printf("leave\n");  
+  unsigned char ret[1];
+  ret[0] = 0xC9;
   set_asm( ret, sizeof( ret ) );
 }
