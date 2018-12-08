@@ -15,14 +15,12 @@ char tokc[100];
 
 void next() {
 	inp();
-
 	if( isdigit( ch ) ) {
 		int i = 0;
 		while( isdigit( ch ) ) {
 			tokc[i++] = ch;	
 			inp();		
 		}
-
 		ofst--;
 		tokc[i] = '\0';
 		tok = 1;
