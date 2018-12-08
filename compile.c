@@ -5,8 +5,7 @@
 #include "asm.h"
 
 void next();
-void fop();
-void sum();
+void sum( int l );
 void inp();
 
 char ch;
@@ -33,49 +32,43 @@ void next() {
 	}
 }
 
-void fop( int l ) {
+void sum( int l ) {
 	next();
 	if( tok == 1) {
 		mov( EAX, atoi( tokc ) );
 		if( l == 1 )
 			next();
 	}
-	
-	if( tok == '*' ) {
-		push(EAX);
-		fop(0);
-		pop(ECX);
-		imul( EAX, ECX);
-		sum();
-	} else if( tok == '/') {
-		push(EAX);
-		fop(0);
-		pop(ECX);
-		xchg( ECX, EAX );
-		cdq();
-		idiv( ECX );
-		sum();
-	}
-}
-
-void sum() {
-	fop(1);
 
 	if( tok == '+' ) {
 		push(EAX);
-		sum();
+		sum(1);
 		pop(ECX);
 		add(EAX, ECX);
 	} else if( tok == '-' ) {
 		push(EAX);
-		sum();
+		sum(1);
 		pop(ECX);
 		sub(EAX, ECX);
 		neg( EAX );
+	} else if( tok == '*' ) {
+		push(EAX);
+		sum(0);
+		pop(ECX);
+		imul( EAX, ECX);
+		sum(1);
+	} else if( tok == '/') {
+		push(EAX);
+		sum(0);
+		pop(ECX);
+		xchg( ECX, EAX );
+		cdq();
+		idiv( ECX );
+		sum(1);
 	}
 }
 
-char *str = "4*3+2";
+char *str = "4*3+2*9";
 
 void inp() {
 	ch = str[ofst++];
@@ -85,7 +78,7 @@ int main(int argc, char const *argv[])
 {
 
 	printf("%s\n", str);
-	sum();
+	sum(1);
 	ret();
 	printf("%d\n", exec( asm_instruction, asm_iter ) );
 
