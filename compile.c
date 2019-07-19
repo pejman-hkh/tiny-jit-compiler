@@ -12,6 +12,8 @@ char ch;
 int ofst = 0;
 int tok = -1;
 char tokc[100];
+char *str;
+int str_len;
 
 void next() {
 	inp();
@@ -30,7 +32,48 @@ void next() {
 	}
 }
 
-int a;
+
+void sum(int a) {
+	next();
+	while(ofst < str_len+1) {
+
+		if( tok == 1) {
+			mov( EAX, atoi( tokc ) );
+			next();
+		}
+
+		if( tok == '*' ) {
+			push(EAX);
+			sum(1);
+			pop(ECX);
+			imul( EAX, ECX);
+		}
+
+		if( tok == '/' ) {
+			push(EAX);
+			sum(1);
+			pop(ECX);
+			xchg( ECX, EAX );
+			cdq();
+			idiv( ECX );			
+		}
+
+		if( tok == '+' ) {
+			if( a == 1)
+				break;
+		
+			push(EAX);
+			sum(1);
+			pop(ECX);
+			add(EAX, ECX);
+
+		}
+
+	}
+}
+
+
+/*int a;
 void sum( int l ) {
 	a = tok;
 	next();
@@ -79,8 +122,7 @@ void sum( int l ) {
 		sum(1);
 	}
 }
-
-char *str;
+*/
 
 void inp() {
 	ch = str[ofst++];
@@ -89,8 +131,10 @@ void inp() {
 int main(int argc, char const *argv[])
 {
 	str = argv[1];
+	str_len = strlen( str );
 	printf("%s\n", str);
-	sum(1);
+
+	sum(0);
 	leave();
 	ret();
 	printf("%d\n", exec( asm_instruction, asm_iter ) );
