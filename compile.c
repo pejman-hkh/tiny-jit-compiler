@@ -34,8 +34,8 @@ void next() {
 
 void sum(int a) {
 	next();
+	int btok;
 	while(ofst < str_len+1) {
-
 		if( tok == 1) {
 			mov( EAX, atoi( tokc ) );
 			next();
@@ -44,9 +44,17 @@ void sum(int a) {
 		if( tok == '*' | tok == '/' | tok == '&' ) {
 			int tokt = tok;
 			next();
-
 			push(EAX);
-			mov( EAX, atoi( tokc ) );
+			if( tok == 1 ) {
+				mov( EAX, atoi( tokc ) );
+			} else if( tok == '-' ) {
+				next();
+				mov( EAX, atoi( tokc ) );
+				mov(ECX,0);
+				sub(EAX, ECX);
+				neg( EAX );				
+			}
+
 			pop(ECX);
 
 			switch( tokt ) {
