@@ -32,7 +32,6 @@ void next() {
 	}
 }
 
-int ttok;
 void sum(int a) {
 	next();
 	while(ofst < str_len+1) {
@@ -42,56 +41,59 @@ void sum(int a) {
 			next();
 		}
 
-		ttok = tok;
-		if( tok == '*' ) {
-			push(EAX);
-			sum(1);
-			pop(ECX);
-			imul( EAX, ECX);
-		}
+		if( tok == '*' | tok == '/' ) {
+			int tokt = tok;
+			next();
 
-		if( tok == '/' ) {
 			push(EAX);
-			sum(1);
+			mov( EAX, atoi( tokc ) );
 			pop(ECX);
-			xchg( ECX, EAX );
-			cdq();
-			idiv( ECX );			
-		}
 
-		if( tok == '-' ) {
-			if( a == 1 ) {
-				if( ttok != 1 ) {
-					next();
-					mov( EAX, atoi( tokc ) );
-					mov(ECX, 0);
-					sub(EAX, ECX);
-					neg( EAX );
-					next();				
-				}
-				break;
+			switch( tokt ) {
+				case '*':
+					imul( EAX, ECX);
+					break;
+				case '/':
+					xchg( ECX, EAX );
+					cdq();
+					idiv( ECX );
+					break;
 			}
 
-			push(EAX);
-			sum(1);
-			pop(ECX);
-			sub(EAX, ECX);
-			neg( EAX );			
+			next();
 		}
 
-		if( tok == '+' ) {
-			if( a == 1)
+		if( tok == '+' | tok == '-' ) {
+			if( a == 1 )
 				break;
-		
+			int tokt = tok;
 			push(EAX);
 			sum(1);
 			pop(ECX);
-			add(EAX, ECX);
+
+			switch( tokt ) {
+				case '+':
+					add(EAX, ECX);
+					break;
+				case '-':
+					sub(EAX, ECX);
+					neg( EAX );
+					break;
+			}
+
 
 		}
-
 	}
 }
+
+
+//3*2+2*5
+/*
+mov eax 3
+
+
+
+*/
 
 
 /*int a;
