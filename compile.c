@@ -34,133 +34,74 @@ void next() {
 
 void sum(int a) {
 	next();
-	int btok;
 	while(ofst < str_len+1) {
-		if( tok == 1) {
+		if( tok == '(' ) {
+			sum(0);
+			next();
+		}
+
+		if( tok == ')') {
+			break;
+		}
+
+		if( tok == 1 ) {
 			mov( EAX, atoi( tokc ) );
 			next();
 		}
 
+		if( tok == '-' ) {
+			next();
+			mov( EAX, atoi( tokc ) );
+			mov(ECX,0);
+			sub(EAX, ECX);
+			neg( EAX );
+			next();			
+		}
+
+		if( a == 2 )
+			break;
+
+
+		int a1 = 1;
 		if( tok == '*' | tok == '/' | tok == '&' ) {
-			int tokt = tok;
-			next();
-			push(EAX);
-			if( tok == 1 ) {
-				mov( EAX, atoi( tokc ) );
-			} else if( tok == '-' ) {
-				next();
-				mov( EAX, atoi( tokc ) );
-				mov(ECX,0);
-				sub(EAX, ECX);
-				neg( EAX );				
-			}
-
-			pop(ECX);
-
-			switch( tokt ) {
-				case '*':
-					imul( EAX, ECX);
-					break;
-				case '/':
-					xchg( ECX, EAX );
-					cdq();
-					idiv( ECX );
-					break;
-				case '&':
-					and(EAX, ECX);
-					break;
-
-			}
-
-			next();
+			a1 = 2;
 		}
 
-		if( tok == '+' | tok == '-' | tok == '|' ) {
-			if( a == 1 )
+		if( a1 == 1 & a == 1 ) {
+			break;
+		}
+
+		int tokt = tok;
+		push(EAX);
+		sum(a1);
+		pop(ECX);
+
+		switch( tokt ) {
+			case '*':
+				imul( EAX, ECX);
 				break;
-			int tokt = tok;
-			push(EAX);
-			sum(1);
-			pop(ECX);
-
-			switch( tokt ) {
-				case '+':
-					add(EAX, ECX);
-					break;
-				case '-':
-					sub(EAX, ECX);
-					neg( EAX );
-					break;
-				case '|':
-					or( EAX, ECX );
-					break;						
-			}
-
-
+			case '/':
+				xchg( ECX, EAX );
+				cdq();
+				idiv( ECX );
+				break;
+			case '&':
+				and(EAX, ECX);
+				break;
+			case '+':
+				add(EAX, ECX);
+				break;
+			case '-':
+				sub(EAX, ECX);
+				neg( EAX );
+				break;
+			case '|':
+				or( EAX, ECX );
+				break;						
 		}
+
 	}
 }
-
-
-//3*2+2*5
-/*
-mov eax 3
-
-
-
-*/
-
-
-/*int a;
-void sum( int l ) {
-	a = tok;
-	next();
-	if( tok == 1) {
-		mov( EAX, atoi( tokc ) );
-		if( l == 1 )
-			next();
-	}
-
-	if( tok == '+' ) {
-		push(EAX);
-		sum(1);
-		pop(ECX);
-		add(EAX, ECX);
-	} else if( tok == '-' ) {
-		
-		if( a == 1 ) {
-			push(EAX);
-			sum(1);
-			pop(ECX);
-			sub(EAX, ECX);
-			neg( EAX );
-		} else {
-			int b = a;
-			sum(0);
-			mov(ECX, 0);
-			sub(EAX, ECX);
-			neg( EAX );
-			if( b == -1 )
-				sum(1);
-		}		
-
-	} else if( tok == '*' ) {
-		push(EAX);
-		sum(0);
-		pop(ECX);
-		imul( EAX, ECX);
-		sum(1);
-	} else if( tok == '/') {
-		push(EAX);
-		sum(0);
-		pop(ECX);
-		xchg( ECX, EAX );
-		cdq();
-		idiv( ECX );
-		sum(1);
-	}
-}
-*/
 
 void inp() {
 	ch = str[ofst++];
