@@ -38,18 +38,12 @@ void sum(int a) {
 		if( tok == '(' ) {
 			sum(0);
 			next();
-		}
-
-		if( tok == ')') {
+		} else if( tok == ')') {
 			break;
-		}
-
-		if( tok == 1 ) {
+		} else if( tok == 1 ) {
 			mov( EAX, atoi( tokc ) );
 			next();
-		}
-
-		if( tok == '-' ) {
+		} else if( tok == '-' ) {
 			next();
 			mov( EAX, atoi( tokc ) );
 			mov(ECX,0);
@@ -61,21 +55,20 @@ void sum(int a) {
 		if( a == 2 )
 			break;
 
-
 		int a1 = 1;
 		if( tok == '*' | tok == '/' | tok == '&' ) {
 			a1 = 2;
-		}
-
-		if( a1 == 1 & a == 1 ) {
-			break;
+		} else {		
+			if( a == 1 ) {
+				break;
+			}
 		}
 
 		int tokt = tok;
 		push(EAX);
 		sum(a1);
 		pop(ECX);
-
+		
 		switch( tokt ) {
 			case '*':
 				imul( EAX, ECX);
