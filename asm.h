@@ -29,5 +29,7 @@ void pop( int reg );
 void cdq();
 void leave();
 void ret();
+void and( int reg, int reg1 );
+void or( int reg, int reg1 );
 
 #endif

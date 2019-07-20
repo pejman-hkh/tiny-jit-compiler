@@ -41,7 +41,7 @@ void sum(int a) {
 			next();
 		}
 
-		if( tok == '*' | tok == '/' ) {
+		if( tok == '*' | tok == '/' | tok == '&' ) {
 			int tokt = tok;
 			next();
 
@@ -58,12 +58,16 @@ void sum(int a) {
 					cdq();
 					idiv( ECX );
 					break;
+				case '&':
+					and(EAX, ECX);
+					break;
+
 			}
 
 			next();
 		}
 
-		if( tok == '+' | tok == '-' ) {
+		if( tok == '+' | tok == '-' | tok == '|' ) {
 			if( a == 1 )
 				break;
 			int tokt = tok;
@@ -79,6 +83,9 @@ void sum(int a) {
 					sub(EAX, ECX);
 					neg( EAX );
 					break;
+				case '|':
+					or( EAX, ECX );
+					break;						
 			}
 
 

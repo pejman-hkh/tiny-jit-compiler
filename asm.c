@@ -130,6 +130,48 @@ void add( int reg, int reg1 ) {
   set_asm( ret, sizeof( ret ) );
 }
 
+void and( int reg, int reg1 ) {
+  printf("and %s, %s\n", regStr[reg], regStr[reg1]  );
+    
+  unsigned char ret[2];
+  switch( reg ) {
+    case EAX :
+      ret[0] = 0x21;
+      switch( reg1 ) {
+        case EBX :
+          ret[1] = 0xD8;
+          break;
+        case ECX :
+          ret[1] = 0xC8;
+          break;            
+      }
+      break; 
+  }
+
+  set_asm( ret, sizeof( ret ) );
+}
+
+void or( int reg, int reg1 ) {
+  printf("or %s, %s\n", regStr[reg], regStr[reg1]  );
+    
+  unsigned char ret[2];
+  switch( reg ) {
+    case EAX :
+      ret[0] = 0x09;
+      switch( reg1 ) {
+        case EBX :
+          ret[1] = 0xD8;
+          break;
+        case ECX :
+          ret[1] = 0xC8;
+          break;            
+      }
+      break; 
+  }
+
+  set_asm( ret, sizeof( ret ) );
+}
+
 
 void sub( int reg, int reg1 ) {
   printf("sub %s, %s\n", regStr[reg], regStr[reg1]  );
