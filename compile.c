@@ -32,7 +32,7 @@ void next() {
 	}
 }
 
-
+int ttok;
 void sum(int a) {
 	next();
 	while(ofst < str_len+1) {
@@ -42,6 +42,7 @@ void sum(int a) {
 			next();
 		}
 
+		ttok = tok;
 		if( tok == '*' ) {
 			push(EAX);
 			sum(1);
@@ -56,6 +57,26 @@ void sum(int a) {
 			xchg( ECX, EAX );
 			cdq();
 			idiv( ECX );			
+		}
+
+		if( tok == '-' ) {
+			if( a == 1 ) {
+				if( ttok != 1 ) {
+					next();
+					mov( EAX, atoi( tokc ) );
+					mov(ECX, 0);
+					sub(EAX, ECX);
+					neg( EAX );
+					next();				
+				}
+				break;
+			}
+
+			push(EAX);
+			sum(1);
+			pop(ECX);
+			sub(EAX, ECX);
+			neg( EAX );			
 		}
 
 		if( tok == '+' ) {
